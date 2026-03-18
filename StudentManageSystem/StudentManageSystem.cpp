@@ -1,419 +1,537 @@
-//Ñ§Éú³É¼¨¹ÜÀíÏµÍ³
-//¿ª·¢ÓïÑÔ£ºCÓïÑÔ
-//¿ª·¢¹¤¾ß£ºVisual Studio 2019
-//¿ª·¢Ê±¼ä£º2019.4.14
-//¿ª·¢Õß£ºsummer
+// å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»Ÿ
+// å¼€å‘è¯­è¨€ï¼šCè¯­è¨€
+// å¼€å‘å·¥å…·ï¼šVisual Studio 2019
+// å¼€å‘æ—¶é—´ï¼š2019.4.14
+// å¼€å‘è€…ï¼šsummer
 
 #include "StudentManageSystem.h"
 
 /*
-<> Ö±½Ó´ÓÏµÍ³Ä¿Â¼ÏÂ²éÕÒ°üº¬Õâ¸öÎÄ¼ş
-"" ÏÈ´Ó¹¤³ÌµÄÏîÄ¿Ä¿Â¼ÏÂ²éÕÒÕâ¸ö£¬Èç¹ûÃ»ÓĞ£¬ÔÙµ½ÏµÍ³Ä¿Â¼ÏÂ²éÕÒ
+<> ç›´æ¥ä»ç³»ç»Ÿç›®å½•ä¸‹æŸ¥æ‰¾åŒ…å«çš„å¤´æ–‡ä»¶
+"" å…ˆä»å·¥ç¨‹çš„é¡¹ç›®ç›®å½•ä¸‹æŸ¥æ‰¾ï¼Œè‹¥æ²¡æœ‰ï¼Œå†åˆ°ç³»ç»Ÿç›®å½•ä¸‹æŸ¥æ‰¾
 */
 
+// è·å–ç§‘ç›®åç§°
+const char* GetSubjectName(int index) {
+    switch (index) {
+        case 0: return "è¯­æ–‡";
+        case 1: return "æ•°å­¦";
+        case 2: return "è‹±è¯­";
+        default: return "æœªçŸ¥";
+    }
+}
+
 int main() {
-	while (1)
-	{
-		//´òÓ¡²Ëµ¥
-		Menu();
-		//¶ÁÈ¡Ò»¸ö×Ö·û ÕûÊı,×Ö·ûÔÚÄÚ´æÖĞÓ³ÉäÎªASCIIÂë
-		char ch = _getch();
+    while (1)
+    {
+        // æ‰“å°èœå•
+        Menu();
+        // è¯»å–ä¸€ä¸ªå­—ç¬¦ æ•°å­—,å­—ç¬¦åœ¨å†…å­˜ä¸­æ˜ å°„ä¸ºASCIIç 
+        char ch = _getch();
 
-		switch (ch)
-		{
-		case '1'://1.Â¼ÈëÑ§ÉúĞÅÏ¢
-			InputStudent();
-			break;
-		case '2'://2.´òÓ¡Ñ§ÉúĞÅÏ¢
-			PrintStudent();
-			break;
-		case '3'://3.±£´æÑ§ÉúĞÅÏ¢
-			SaveStudent();
-			break;
-		case '4'://4.¶ÁÈ¡Ñ§ÉúĞÅÏ¢
-			ReadStudent();
-			break;
-		case '5'://5.Í³¼ÆËùÓĞÑ§ÉúÈËÊı
-			CountStudent();
-			break;
-		case '6'://6.²éÕÒÑ§ÉúĞÅÏ¢
-			FindStudent();
-			break;
-		case '7'://7.ĞŞ¸ÄÑ§ÉúĞÅÏ¢
-			ChangeStudent();
-			break;
-		case '8'://8.É¾³ıÑ§ÉúĞÅÏ¢
-			DeleteStudent();
-			break;
-		case '0'://0.ÍË³öÏµÍ³
-			return 0;
-			break;
-		default:
-			printf("ÊäÈëÓĞÎó£¬Ã»ÓĞ¸Ã¹¦ÄÜ\n\n");
-			system("pause");  //ÔİÍ£
-			system("cls");    //ÇåÆÁ
-			break;
-		}
-	}
+        switch (ch)
+        {
+        case '1':
+            InputStudent();
+            break;
+        case '2':
+            PrintStudent();
+            break;
+        case '3':
+            SaveStudent();
+            break;
+        case '4':
+            ReadStudent();
+            break;
+        case '5':
+            CountStudent();
+            break;
+        case '6':
+            FindStudent();
+            break;
+        case '7':
+            ChangeStudent();
+            break;
+        case '8':
+            DeleteStudent();
+            break;
+        case '9':
+            ClassStatistics();
+            break;
+        case '0':
+            return 0;
+            break;
+        default:
+            printf("æ‚¨è¾“å…¥çš„æ²¡æœ‰è¯¥åŠŸèƒ½\n\n");
+            system("pause");
+            system("cls");
+            break;
+        }
+    }
 
-	return 0;
+    return 0;
 }
 
-//²Ëµ¥
+// èœå•
 void Menu() {
-	printf("*************************************************\n");
-	printf("*\t»¶Ó­Ê¹ÓÃ¸ßĞ£Ñ§Éú³É¼¨¹ÜÀíÏµÍ³V1.0\t*\n");
-	printf("*\t\tÇëÑ¡Ôñ¹¦ÄÜ\t\t\t*\n");
-	printf("*************************************************\n");
-	printf("*\t\t1.Â¼ÈëÑ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t2.´òÓ¡Ñ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t3.±£´æÑ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t4.¶ÁÈ¡Ñ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t5.Í³¼ÆËùÓĞÑ§ÉúÈËÊı\t\t*\n");
-	printf("*\t\t6.²éÕÒÑ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t7.ĞŞ¸ÄÑ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t8.É¾³ıÑ§ÉúĞÅÏ¢\t\t\t*\n");
-	printf("*\t\t0.ÍË³öÏµÍ³\t\t\t*\n");
-	printf("*************************************************\n");
+    printf("*************************************************\n");
+    printf("*\tæ¬¢è¿ä½¿ç”¨é«˜æ ¡å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»ŸV2.0\t*\n");
+    printf("*\t\tè¯·é€‰æ‹©åŠŸèƒ½\t\t\t*\n");
+    printf("*************************************************\n");
+    printf("*\t\t1.å½•å…¥å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t2.æ‰“å°å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t3.ä¿å­˜å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t4.è¯»å–å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t5.ç»Ÿè®¡å­¦ç”Ÿäººæ•°\t\t\t*\n");
+    printf("*\t\t6.æŸ¥æ‰¾å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t7.ä¿®æ”¹å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t8.åˆ é™¤å­¦ç”Ÿä¿¡æ¯\t\t\t*\n");
+    printf("*\t\t9.ç­çº§æˆç»©ç»Ÿè®¡\t\t\t*\n");
+    printf("*\t\t0.é€€å‡ºç³»ç»Ÿ\t\t\t*\n");
+    printf("*************************************************\n");
 }
 
-//1.Â¼ÈëÑ§ÉúĞÅÏ¢
+// 1.å½•å…¥å­¦ç”Ÿä¿¡æ¯
 void InputStudent() {
-	//´´½¨Ò»¸öÈË£¬ÔÚ¶ÑÖĞ·ÖÅäÄÚ´æ
-	Node* pNewNode = (Node*)malloc(sizeof(Node));
-	//Ö¸ÕëÏÂÒ»¸öÖ¸Ïò¿Õ
-	pNewNode->pNext = NULL;
+    // åˆ›å»ºä¸€ä¸ªæ–°èŠ‚ç‚¹
+    Node* pNewNode = (Node*)malloc(sizeof(Node));
+    pNewNode->pNext = NULL;
 
-	//²éÕÒÁ´±íµÄÎ²½áµã
-	Node* p = g_pHead;
-	while (g_pHead != NULL && p->pNext != NULL)
-	{
-		p = p->pNext;
-	}
+    // æ‰¾åˆ°é“¾è¡¨å°¾éƒ¨
+    Node* p = g_pHead;
+    while (g_pHead != NULL && p->pNext != NULL)
+    {
+        p = p->pNext;
+    }
 
-	//°Ñ½Úµã²åµ½Á´±íµÄÎ²½Úµã
-	if (g_pHead == NULL) {
-		g_pHead = pNewNode;
-	}
-	else {
-		p->pNext = pNewNode;
-	}
+    // å°†æ–°èŠ‚ç‚¹æ·»åŠ åˆ°é“¾è¡¨å°¾éƒ¨
+    if (g_pHead == NULL) {
+        g_pHead = pNewNode;
+    }
+    else {
+        p->pNext = pNewNode;
+    }
 
-	//Â¼ÈëÑ§ÉúĞÅÏ¢
-	printf("ÇëÊäÈëÑ§ÉúĞÕÃû£º\n");
-	scanf_s("%s", pNewNode->stu.szName, sizeof(pNewNode->stu.szName));
-	printf("ÇëÊäÈëĞÔ±ğ£º\n");
-	scanf_s("%s", pNewNode->stu.szSex, sizeof(pNewNode->stu.szSex));
-	printf("ÇëÊäÈëÑ§ÉúÄêÁä£º\n");
-	scanf_s("%d", &pNewNode->stu.nAge);
-	printf("ÇëÊäÈëÑ§ºÅ£º\n");
-	scanf_s("%d", &pNewNode->stu.nStuNo);
-	printf("ÇëÊäÈë³É¼¨£º\n");
-	scanf_s("%d", &pNewNode->stu.nScore);
+    // å½•å…¥å­¦ç”Ÿä¿¡æ¯
+    printf("è¯·è¾“å…¥å­¦ç”Ÿå§“å:\n");
+    scanf_s("%s", pNewNode->stu.szName, sizeof(pNewNode->stu.szName));
+    printf("è¯·è¾“å…¥æ€§åˆ«:\n");
+    scanf_s("%s", pNewNode->stu.szSex, sizeof(pNewNode->stu.szSex));
+    printf("è¯·è¾“å…¥å­¦ç”Ÿå¹´é¾„:\n");
+    scanf_s("%d", &pNewNode->stu.nAge);
+    printf("è¯·è¾“å…¥å­¦å·:\n");
+    scanf_s("%d", &pNewNode->stu.nStuNo);
+    printf("è¯·è¾“å…¥ç­çº§åç§°:\n");
+    scanf_s("%s", pNewNode->stu.szClassName, sizeof(pNewNode->stu.szClassName));
+    
+    // å½•å…¥å„ç§‘æˆç»©
+    for (int i = 0; i < SUBJECT_COUNT; i++) {
+        printf("è¯·è¾“å…¥%sæˆç»©:\n", GetSubjectName(i));
+        scanf_s("%d", &pNewNode->stu.nScores[i]);
+    }
 
-	printf("Ñ§ÉúĞÅÏ¢Â¼Èë³É¹¦¡£\n\n");
-	system("pause");
-	system("cls");
+    printf("å­¦ç”Ÿä¿¡æ¯å½•å…¥æˆåŠŸ!\n\n");
+    system("pause");
+    system("cls");
 }
 
-//2.´òÓ¡Ñ§ÉúĞÅÏ¢
+// 2.æ‰“å°å­¦ç”Ÿä¿¡æ¯
 void PrintStudent() {
 
-	system("cls");
-	//±éÀúÁ´±í
-	Node* p = g_pHead;
-	if (p == NULL) {
-		printf("ÏµÍ³ÖĞÔİÎŞÑ§ÉúĞÅÏ¢£¬ÇëÂ¼ÈëºóÔÙÀ´´òÓ¡²é¿´¡£\n\n");
-	}
-	else {
-		printf("*********************************************************************************\n");
-		printf("*\t\t\t»¶Ó­Ê¹ÓÃ¸ßĞ£Ñ§Éú³É¼¨¹ÜÀíÏµÍ³V1.0\t\t\t*\n");
-		printf("*********************************************************************************\n");
-		printf("*\tÑ§ºÅ\t*\tĞÕÃû\t*\tĞÔ±ğ\t*\tÄêÁä\t*\t³É¼¨\t*\n");
-		printf("*********************************************************************************\n");
+    system("cls");
+    Node* p = g_pHead;
+    if (p == NULL) {
+        printf("ç³»ç»Ÿä¸­æš‚æ— å­¦ç”Ÿä¿¡æ¯ï¼Œè¯·å…ˆå½•å…¥åå†æ‰“å°æŸ¥çœ‹ã€‚\n\n");
+    }
+    else {
+        printf("****************************************************************************************************\n");
+        printf("*\t\t\tæ¬¢è¿ä½¿ç”¨é«˜æ ¡å­¦ç”Ÿæˆç»©ç®¡ç†ç³»ç»ŸV2.0\t\t\t\t\t     *\n");
+        printf("****************************************************************************************************\n");
+        printf("*  å­¦å·  *  å§“å  * æ€§åˆ« * å¹´é¾„ *    ç­çº§    *  è¯­æ–‡  *  æ•°å­¦  *  è‹±è¯­  *  å¹³å‡åˆ†  *\n");
+        printf("****************************************************************************************************\n");
 
-		while (p != NULL)
-		{
-			printf("*\t%d\t*\t%s\t*\t%s\t*\t%d\t*\t%d\t*\n",
-				p->stu.nStuNo,
-				p->stu.szName,
-				p->stu.szSex,
-				p->stu.nAge,
-				p->stu.nScore
-			);
+        while (p != NULL)
+        {
+            // è®¡ç®—å¹³å‡åˆ†
+            int sum = 0;
+            for (int i = 0; i < SUBJECT_COUNT; i++) {
+                sum += p->stu.nScores[i];
+            }
+            double avg = (double)sum / SUBJECT_COUNT;
 
-			//ÏÂÒ»¸ö½Úµã
-			p = p->pNext;
-			printf("*********************************************************************************\n");
-		}
-	}
+            printf("* %6d * %6s *  %s  *  %2d  * %10s *  %3d   *  %3d   *  %3d   *   %5.1f   *\n",
+                p->stu.nStuNo,
+                p->stu.szName,
+                p->stu.szSex,
+                p->stu.nAge,
+                p->stu.szClassName,
+                p->stu.nScores[0],
+                p->stu.nScores[1],
+                p->stu.nScores[2],
+                avg
+            );
 
-	system("pause");
-	system("cls");
+            p = p->pNext;
+            printf("****************************************************************************************************\n");
+        }
+    }
+
+    system("pause");
+    system("cls");
 }
 
-//3.±£´æÑ§ÉúĞÅÏ¢
+// 3.ä¿å­˜å­¦ç”Ÿä¿¡æ¯
 void SaveStudent() {
-	//´ò¿ªÎÄ¼ş
-	FILE* pFile;
-	pFile = fopen(".\\stuinfo.dat", "w");
-	
-	if (pFile == NULL) {
-		printf("´ò¿ªÎÄ¼şÊ§°Ü¡£\n");
-		return;
-	}
+    FILE* pFile;
+    pFile = fopen(".\\stuinfo.dat", "w");
+    
+    if (pFile == NULL) {
+        printf("æ‰“å¼€æ–‡ä»¶å¤±è´¥ã€‚\n");
+        return;
+    }
 
-	//Ğ´ÈëÊı¾İ
-	Node* p = g_pHead;
-	while (p != NULL)
-	{
-		//fwrite(&p->stu, sizeof(Node), 1, pFile);
-		fprintf(pFile,"*\t%d\t*\t%s\t*\t%s\t*\t%d\t*\t%d\t*\n",
-			p->stu.nStuNo,
-			p->stu.szName,
-			p->stu.szSex,
-			p->stu.nAge,
-			p->stu.nScore);
-		p = p->pNext;
-	}
-	//¹Ø±ÕÎÄ¼ş
-	fclose(pFile);
+    Node* p = g_pHead;
+    while (p != NULL)
+    {
+        fprintf(pFile,"%d %s %s %d %s %d %d %d\n",
+            p->stu.nStuNo,
+            p->stu.szName,
+            p->stu.szSex,
+            p->stu.nAge,
+            p->stu.szClassName,
+            p->stu.nScores[0],
+            p->stu.nScores[1],
+            p->stu.nScores[2]);
+        p = p->pNext;
+    }
+    fclose(pFile);
 
-	printf("Êı¾İ±£´æ³É¹¦¡£\n");
-	system("pause");
-	system("cls");
+    printf("æ•°æ®ä¿å­˜æˆåŠŸ!\n");
+    system("pause");
+    system("cls");
 }
 
-//4.¶ÁÈ¡Ñ§ÉúĞÅÏ¢
+// 4.è¯»å–å­¦ç”Ÿä¿¡æ¯
 void ReadStudent() {
-	system("cls");
+    system("cls");
 
-	//´ò¿ªÎÄ¼ş
-	FILE* pFile;
-	pFile = fopen(".\\stuinfo.dat", "r");
+    FILE* pFile;
+    pFile = fopen(".\\stuinfo.dat", "r");
 
-	if (pFile == NULL) {
-		printf("´ò¿ªÎÄ¼şÊ§°Ü¡£\n");
-		return;
-	}
-	
-	//´´½¨Ò»¸öÈË£¬ÔÚ¶ÑÖĞ·ÖÅäÄÚ´æ
-	Node* p = (Node*)malloc(sizeof(Node));
-	p->pNext = NULL;
-	//ÖØĞÂ½¨Á¢Á´±í
-	g_pHead = p;
+    if (pFile == NULL) {
+        printf("æ‰“å¼€æ–‡ä»¶å¤±è´¥ã€‚\n");
+        return;
+    }
+    
+    // é‡Šæ”¾åŸæœ‰é“¾è¡¨å†…å­˜
+    Node* pTemp = g_pHead;
+    while (pTemp != NULL) {
+        Node* pNext = pTemp->pNext;
+        free(pTemp);
+        pTemp = pNext;
+    }
+    g_pHead = NULL;
 
-	//Öğ¸öµ¥´Ê¶ÁÈëÎÄ±¾ÄÚÈİ
-	char str[200];
-	int i = 0;
-	while (fscanf(pFile, "%s", str) != EOF) {  //¶ÁÎÄ¼ş 
-		//µ¥´Ê²»ÊÇ*»òÕß¿ÕÊ±£¬½øĞĞ¸³Öµ
-		if (strcmp(str, "*") && str != NULL) {
-			switch (i)
-			{
-			case 0:
-				p->stu.nStuNo = atoi(str);
-				break;
-			case 1:
-				strcpy(p->stu.szName, str);
-				break;
-			case 2:
-				strcpy(p->stu.szSex, str);
-				break;
-			case 3:
-				p->stu.nAge = atoi(str);
-				break;
-			case 4:
-				p->stu.nScore = atoi(str);
-				break;
-			default:
-				Node* pNewNode = (Node*)malloc(sizeof(Node));
-				pNewNode->pNext = NULL;
-				p->pNext = pNewNode;
-				p = pNewNode;
-				p->stu.nStuNo = atoi(str);
-				i = 0;
-				break;
-			}
-			i++;
-		}
-	}
-	//´òÓ¡¶ÁÈ¡½á¹û
-	PrintStudent();
+    Node* pTail = NULL;
+    
+    while (!feof(pFile)) {
+        Node* pNewNode = (Node*)malloc(sizeof(Node));
+        pNewNode->pNext = NULL;
+        
+        int result = fscanf(pFile, "%d %s %s %d %s %d %d %d\n",
+            &pNewNode->stu.nStuNo,
+            pNewNode->stu.szName,
+            pNewNode->stu.szSex,
+            &pNewNode->stu.nAge,
+            pNewNode->stu.szClassName,
+            &pNewNode->stu.nScores[0],
+            &pNewNode->stu.nScores[1],
+            &pNewNode->stu.nScores[2]);
+        
+        if (result == 8) {
+            if (g_pHead == NULL) {
+                g_pHead = pNewNode;
+                pTail = pNewNode;
+            } else {
+                pTail->pNext = pNewNode;
+                pTail = pNewNode;
+            }
+        } else {
+            free(pNewNode);
+            break;
+        }
+    }
+    
+    fclose(pFile);
+
+    printf("æ•°æ®è¯»å–æˆåŠŸ!\n");
+    PrintStudent();
 }
 
-//5.Í³¼ÆËùÓĞÑ§ÉúÈËÊı
+// 5.ç»Ÿè®¡å­¦ç”Ÿäººæ•°
 void CountStudent() {
-	int countStu = 0;
+    int countStu = 0;
 
-	//±éÀúÁ´±í
-	Node* p = g_pHead;
-	while (p != NULL)
-	{
-		countStu++;
-		p = p->pNext;
-	}
-	printf("Ñ§Éú×ÜÈËÊı£º%d\n\n", countStu);
+    Node* p = g_pHead;
+    while (p != NULL)
+    {
+        countStu++;
+        p = p->pNext;
+    }
+    printf("å­¦ç”Ÿæ€»äººæ•°ä¸º:%d\n\n", countStu);
 
-	system("pause");
-	system("cls");
+    system("pause");
+    system("cls");
 }
 
-//6.²éÕÒÑ§ÉúĞÅÏ¢
+// 6.æŸ¥æ‰¾å­¦ç”Ÿä¿¡æ¯
 void FindStudent() {
-	system("cls");
-	//ÒÔÑ§ºÅÎª²éÕÒÊ¾Àı£¬ÆäËûĞÅÏ¢²éÕÒÁ÷³Ì»ù±¾ÏàËÆ
-	int stuNum;
-	printf("ÇëÊäÈë²éÕÒÑ§ÉúÑ§ºÅ£º");
-	scanf("%d", &stuNum);
-	//±éÀúÁ´±í²éÕÒ£¬²éÕÒµ½ºó½øĞĞĞÅÏ¢ÏÔÊ¾
-	Node* p = g_pHead;
-	//¶Ô±íÍ·½øĞĞÕ¹Ê¾Ò»´Î
-	bool isShowHead = false;
-	//¼ÇÂ¼ÊÇ·ñÓĞÕÒµ½¸ÃÑ§ºÅµÄÑ§ÉúĞÅÏ¢
-	bool isFindStu = false;
-	while (p != NULL)
-	{
-		if (stuNum == p->stu.nStuNo) {
-			if (!isShowHead) {
-				printf("*********************************************************************************\n");
-				printf("*\tÑ§ºÅ\t*\tĞÕÃû\t*\tĞÔ±ğ\t*\tÄêÁä\t*\t³É¼¨\t*\n");
-				printf("*********************************************************************************\n");
-				isShowHead = true;
-			}
-			printf("*\t%d\t*\t%s\t*\t%s\t*\t%d\t*\t%d\t*\n",
-				p->stu.nStuNo,
-				p->stu.szName,
-				p->stu.szSex,
-				p->stu.nAge,
-				p->stu.nScore
-			);
-			isFindStu = true;
-			printf("*********************************************************************************\n");
-		}
-		p = p->pNext;
-	}
+    system("cls");
+    int stuNum;
+    printf("è¯·è¾“å…¥è¦æŸ¥æ‰¾å­¦ç”Ÿçš„å­¦å·:");
+    scanf("%d", &stuNum);
+    
+    Node* p = g_pHead;
+    bool isShowHead = false;
+    bool isFindStu = false;
+    while (p != NULL)
+    {
+        if (stuNum == p->stu.nStuNo) {
+            if (!isShowHead) {
+                printf("****************************************************************************************************\n");
+                printf("*  å­¦å·  *  å§“å  * æ€§åˆ« * å¹´é¾„ *    ç­çº§    *  è¯­æ–‡  *  æ•°å­¦  *  è‹±è¯­  *\n");
+                printf("****************************************************************************************************\n");
+                isShowHead = true;
+            }
+            printf("* %6d * %6s *  %s  *  %2d  * %10s *  %3d   *  %3d   *  %3d   *\n",
+                p->stu.nStuNo,
+                p->stu.szName,
+                p->stu.szSex,
+                p->stu.nAge,
+                p->stu.szClassName,
+                p->stu.nScores[0],
+                p->stu.nScores[1],
+                p->stu.nScores[2]
+            );
+            isFindStu = true;
+            printf("****************************************************************************************************\n");
+        }
+        p = p->pNext;
+    }
 
-	if (!isFindStu) {
-		printf("Ñ§ºÅÊäÈëÓĞÎó£¬ÏµÍ³ÖĞÔİÎŞ¸ÃÑ§ÉúĞÅÏ¢¡£\n\n");
-	}
+    if (!isFindStu) {
+        printf("å­¦å·ä¸å­˜åœ¨ç³»ç»Ÿä¸­ï¼Œè¯·ä¿®æ”¹å­¦å·ã€‚\n\n");
+    }
 
-	system("pause");
-	system("cls");
+    system("pause");
+    system("cls");
 }
 
-//7.ĞŞ¸ÄÑ§ÉúĞÅÏ¢
+// 7.ä¿®æ”¹å­¦ç”Ÿä¿¡æ¯
 void ChangeStudent() {
-	//ÒÔÑ§ºÅÎª²éÕÒÊ¾Àı£¬ÆäËûĞÅÏ¢²éÕÒÁ÷³Ì»ù±¾ÏàËÆ
-	int stuNum;
-	printf("ÇëÊäÈëÓûĞŞ¸ÄÑ§ÉúµÄÑ§ºÅ£º");
-	scanf("%d", &stuNum);
-	//±éÀúÁ´±í²éÕÒ£¬²éÕÒµ½ºó½øĞĞĞÅÏ¢ÏÔÊ¾
-	Node* p = g_pHead;
-	//¶Ô±íÍ·½øĞĞÕ¹Ê¾Ò»´Î
-	bool isShowHead = false;
-	//¼ÇÂ¼ÊÇ·ñÓĞÕÒµ½¸ÃÑ§ºÅµÄÑ§ÉúĞÅÏ¢
-	bool isFindStu = false;
-	while (p != NULL)
-	{
-		if (stuNum == p->stu.nStuNo) {
-			if (!isShowHead) {
-				printf("*********************************************************************************\n");
-				printf("*\tÑ§ºÅ\t*\tĞÕÃû\t*\tĞÔ±ğ\t*\tÄêÁä\t*\t³É¼¨\t*\n");
-				printf("*********************************************************************************\n");
-				isShowHead = true;
-			}
-			printf("*\t%d\t*\t%s\t*\t%s\t*\t%d\t*\t%d\t*\n",
-				p->stu.nStuNo,
-				p->stu.szName,
-				p->stu.szSex,
-				p->stu.nAge,
-				p->stu.nScore
-			);
-			//ĞŞ¸ÄÑ§ÉúĞÅÏ¢
-			printf("ÇëÊäÈëÑ§ÉúĞÕÃû£º\n");
-			scanf_s("%s", p->stu.szName, sizeof(p->stu.szName));
-			printf("ÇëÊäÈëĞÔ±ğ£º\n");
-			scanf_s("%s", p->stu.szSex, sizeof(p->stu.szSex));
-			printf("ÇëÊäÈëÑ§ÉúÄêÁä£º\n");
-			scanf_s("%d", &p->stu.nAge);
-			printf("ÇëÊäÈëÑ§ºÅ£º\n");
-			scanf_s("%d", &p->stu.nStuNo);
-			printf("ÇëÊäÈë³É¼¨£º\n");
-			scanf_s("%d", &p->stu.nScore);
-			isFindStu = true;
-			printf("*********************************************************************************\n");
-			printf("Ñ§ÉúĞÅÏ¢ĞŞ¸Ä³É¹¦£¬Çë×¢Òâ¼°Ê±±£´æ¡£\n\n");
-		}
-		p = p->pNext;
-	}
+    int stuNum;
+    printf("è¯·è¾“å…¥è¦ä¿®æ”¹å­¦ç”Ÿçš„å­¦å·:");
+    scanf("%d", &stuNum);
+    
+    Node* p = g_pHead;
+    bool isShowHead = false;
+    bool isFindStu = false;
+    while (p != NULL)
+    {
+        if (stuNum == p->stu.nStuNo) {
+            if (!isShowHead) {
+                printf("****************************************************************************************************\n");
+                printf("*  å­¦å·  *  å§“å  * æ€§åˆ« * å¹´é¾„ *    ç­çº§    *  è¯­æ–‡  *  æ•°å­¦  *  è‹±è¯­  *\n");
+                printf("****************************************************************************************************\n");
+                isShowHead = true;
+            }
+            printf("* %6d * %6s *  %s  *  %2d  * %10s *  %3d   *  %3d   *  %3d   *\n",
+                p->stu.nStuNo,
+                p->stu.szName,
+                p->stu.szSex,
+                p->stu.nAge,
+                p->stu.szClassName,
+                p->stu.nScores[0],
+                p->stu.nScores[1],
+                p->stu.nScores[2]
+            );
+            // ä¿®æ”¹å­¦ç”Ÿä¿¡æ¯
+            printf("è¯·è¾“å…¥å­¦ç”Ÿå§“å:\n");
+            scanf_s("%s", p->stu.szName, sizeof(p->stu.szName));
+            printf("è¯·è¾“å…¥æ€§åˆ«:\n");
+            scanf_s("%s", p->stu.szSex, sizeof(p->stu.szSex));
+            printf("è¯·è¾“å…¥å­¦ç”Ÿå¹´é¾„:\n");
+            scanf_s("%d", &p->stu.nAge);
+            printf("è¯·è¾“å…¥å­¦å·:\n");
+            scanf_s("%d", &p->stu.nStuNo);
+            printf("è¯·è¾“å…¥ç­çº§åç§°:\n");
+            scanf_s("%s", p->stu.szClassName, sizeof(p->stu.szClassName));
+            
+            for (int i = 0; i < SUBJECT_COUNT; i++) {
+                printf("è¯·è¾“å…¥%sæˆç»©:\n", GetSubjectName(i));
+                scanf_s("%d", &p->stu.nScores[i]);
+            }
+            
+            isFindStu = true;
+            printf("****************************************************************************************************\n");
+            printf("å­¦ç”Ÿä¿¡æ¯ä¿®æ”¹æˆåŠŸï¼Œè¯·åŠæ—¶ä¿å­˜ã€‚\n\n");
+        }
+        p = p->pNext;
+    }
 
-	if (!isFindStu) {
-		printf("Ñ§ºÅÊäÈëÓĞÎó£¬ÏµÍ³ÖĞÔİÎŞ¸ÃÑ§ÉúĞÅÏ¢£¬ÎŞ·¨½øĞĞĞŞ¸Ä¡£\n\n");
-	}
+    if (!isFindStu) {
+        printf("å­¦å·ä¸å­˜åœ¨ç³»ç»Ÿä¸­ï¼Œæ— æ³•è¿›è¡Œä¿®æ”¹ã€‚\n\n");
+    }
 
-	system("pause");
-	system("cls");
+    system("pause");
+    system("cls");
 }
 
-//8.É¾³ıÑ§ÉúĞÅÏ¢
+// 8.åˆ é™¤å­¦ç”Ÿä¿¡æ¯
 void DeleteStudent() {
-	system("cls");
-	//ÒÔÑ§ºÅÎª²éÕÒÊ¾Àı£¬ÆäËûĞÅÏ¢²éÕÒÁ÷³Ì»ù±¾ÏàËÆ
-	int stuNum;
-	printf("ÇëÊäÈëÉ¾³ıÑ§ÉúµÄÑ§ºÅ£º");
-	scanf("%d", &stuNum);
-	//±éÀúÁ´±í²éÕÒ£¬²éÕÒµ½ºó½øĞĞĞÅÏ¢ÏÔÊ¾
-	Node* p = g_pHead;
-	//¼ÇÂ¼Ç°Ò»¸ö½Úµã£¬É¾³ıÊ±·½±ã²Ù×÷
-	Node* beforeNode = g_pHead;
+    system("cls");
+    int stuNum;
+    printf("è¯·è¾“å…¥è¦åˆ é™¤å­¦ç”Ÿçš„å­¦å·:");
+    scanf("%d", &stuNum);
+    
+    Node* p = g_pHead;
+    Node* beforeNode = NULL;
 
-	//¶Ô±íÍ·½øĞĞÕ¹Ê¾Ò»´Î
-	bool isShowHead = false;
-	//¼ÇÂ¼ÊÇ·ñÓĞÕÒµ½¸ÃÑ§ºÅµÄÑ§ÉúĞÅÏ¢
-	bool isFindStu = false;
-	while (p != NULL)
-	{
-		if (stuNum == p->stu.nStuNo) {
-			if (!isShowHead) {
-				printf("*********************************************************************************\n");
-				printf("*\tÑ§ºÅ\t*\tĞÕÃû\t*\tĞÔ±ğ\t*\tÄêÁä\t*\t³É¼¨\t*\n");
-				printf("*********************************************************************************\n");
-				isShowHead = true;
-			}
-			printf("*\t%d\t*\t%s\t*\t%s\t*\t%d\t*\t%d\t*\n",
-				p->stu.nStuNo,
-				p->stu.szName,
-				p->stu.szSex,
-				p->stu.nAge,
-				p->stu.nScore
-			);
-			isFindStu = true;
-			printf("*********************************************************************************\n");
+    bool isShowHead = false;
+    bool isFindStu = false;
+    while (p != NULL)
+    {
+        if (stuNum == p->stu.nStuNo) {
+            if (!isShowHead) {
+                printf("****************************************************************************************************\n");
+                printf("*  å­¦å·  *  å§“å  * æ€§åˆ« * å¹´é¾„ *    ç­çº§    *  è¯­æ–‡  *  æ•°å­¦  *  è‹±è¯­  *\n");
+                printf("****************************************************************************************************\n");
+                isShowHead = true;
+            }
+            printf("* %6d * %6s *  %s  *  %2d  * %10s *  %3d   *  %3d   *  %3d   *\n",
+                p->stu.nStuNo,
+                p->stu.szName,
+                p->stu.szSex,
+                p->stu.nAge,
+                p->stu.szClassName,
+                p->stu.nScores[0],
+                p->stu.nScores[1],
+                p->stu.nScores[2]
+            );
+            isFindStu = true;
+            printf("****************************************************************************************************\n");
 
-			//É¾³ı½ÚµãÎªÍ·½Úµã
-			if (p == g_pHead) {
-				g_pHead = p->pNext;
-			}
-			//É¾³ı½ÚµãÎªÎ²½Úµã
-			else if (p->pNext == NULL) {
-				p = beforeNode;
-				p->pNext = NULL;
-			}
-			//É¾³ı½ÚµãÎªÖĞ¼ä½Úµã
-			else {
-				beforeNode->pNext = p->pNext;
-			}
-			printf("É¾³ı³É¹¦£¬Çë¼ÇµÃ±£´æ¡£\n\n");
-		}
-		beforeNode = p;
-		p = p->pNext;
-	}
+            // åˆ é™¤èŠ‚ç‚¹ä¸ºå¤´èŠ‚ç‚¹
+            if (p == g_pHead) {
+                g_pHead = p->pNext;
+                free(p);
+                p = g_pHead;
+            }
+            // åˆ é™¤èŠ‚ç‚¹ä¸ºä¸­é—´æˆ–å°¾èŠ‚ç‚¹
+            else {
+                beforeNode->pNext = p->pNext;
+                free(p);
+                p = beforeNode->pNext;
+            }
+            printf("åˆ é™¤æˆåŠŸï¼Œè®°å¾—ä¿å­˜ã€‚\n\n");
+            continue;
+        }
+        beforeNode = p;
+        p = p->pNext;
+    }
 
-	if (!isFindStu) {
-		printf("Ñ§ºÅÊäÈëÓĞÎó£¬ÏµÍ³ÖĞÔİÎŞ¸ÃÑ§ÉúĞÅÏ¢£¬ÎŞ·¨½øĞĞÉ¾³ı²Ù×÷¡£\n\n");
-	}
+    if (!isFindStu) {
+        printf("å­¦å·ä¸å­˜åœ¨ç³»ç»Ÿä¸­ï¼Œæ— æ³•åˆ é™¤ã€‚\n\n");
+    }
 
-	system("pause");
-	system("cls");
+    system("pause");
+    system("cls");
+}
+
+// 9.ç­çº§æˆç»©ç»Ÿè®¡åˆ†æ
+void ClassStatistics() {
+    system("cls");
+    
+    if (g_pHead == NULL) {
+        printf("ç³»ç»Ÿä¸­æš‚æ— å­¦ç”Ÿä¿¡æ¯ï¼Œè¯·å…ˆå½•å…¥å­¦ç”Ÿä¿¡æ¯ã€‚\n\n");
+        system("pause");
+        system("cls");
+        return;
+    }
+    
+    char className[30];
+    printf("è¯·è¾“å…¥è¦ç»Ÿè®¡çš„ç­çº§åç§°:");
+    scanf("%s", className);
+    
+    // ç»Ÿè®¡è¯¥ç­çº§çš„å­¦ç”Ÿ
+    int count = 0;
+    double subjectTotals[SUBJECT_COUNT] = {0};
+    double studentAvgSum = 0;
+    
+    Node* p = g_pHead;
+    bool found = false;
+    
+    printf("\n");
+    printf("================================================================================\n");
+    printf("                        ç­çº§æˆç»©ç»Ÿè®¡åˆ†ææŠ¥å‘Š                                    \n");
+    printf("================================================================================\n");
+    printf("ç­çº§åç§°: %s\n", className);
+    printf("--------------------------------------------------------------------------------\n");
+    printf("å­¦ç”Ÿåå•:\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf("*  å­¦å·  *  å§“å  *  è¯­æ–‡  *  æ•°å­¦  *  è‹±è¯­  *  å¹³å‡åˆ†  *\n");
+    printf("--------------------------------------------------------------------------------\n");
+    
+    while (p != NULL) {
+        if (strcmp(p->stu.szClassName, className) == 0) {
+            found = true;
+            count++;
+            
+            // è®¡ç®—è¯¥å­¦ç”Ÿæ€»åˆ†å’Œå¹³å‡åˆ†
+            int studentSum = 0;
+            for (int i = 0; i < SUBJECT_COUNT; i++) {
+                studentSum += p->stu.nScores[i];
+                subjectTotals[i] += p->stu.nScores[i];
+            }
+            double studentAvg = (double)studentSum / SUBJECT_COUNT;
+            studentAvgSum += studentAvg;
+            
+            printf("* %6d * %6s *  %3d   *  %3d   *  %3d   *   %5.1f   *\n",
+                p->stu.nStuNo,
+                p->stu.szName,
+                p->stu.nScores[0],
+                p->stu.nScores[1],
+                p->stu.nScores[2],
+                studentAvg
+            );
+        }
+        p = p->pNext;
+    }
+    
+    printf("--------------------------------------------------------------------------------\n");
+    
+    if (!found) {
+        printf("æœªæ‰¾åˆ°è¯¥ç­çº§çš„å­¦ç”Ÿä¿¡æ¯ã€‚\n\n");
+    } else {
+        // è®¡ç®—ç­çº§å¹³å‡åˆ†
+        double classAvg = studentAvgSum / count;
+        
+        printf("\n");
+        printf("================================================================================\n");
+        printf("                        ç­çº§æ•´ä½“æƒ…å†µç»Ÿè®¡                                        \n");
+        printf("================================================================================\n");
+        printf("ç­çº§å­¦ç”Ÿäººæ•°: %d äºº\n", count);
+        printf("--------------------------------------------------------------------------------\n");
+        printf("ç­çº§å¹³å‡åˆ†(æ‰€æœ‰å­¦ç”Ÿå¹³å‡åˆ†çš„å‡å€¼): %.2f åˆ†\n", classAvg);
+        printf("--------------------------------------------------------------------------------\n");
+        printf("å„ç§‘å¹³å‡åˆ†:\n");
+        for (int i = 0; i < SUBJECT_COUNT; i++) {
+            printf("  %s: %.2f åˆ†\n", GetSubjectName(i), subjectTotals[i] / count);
+        }
+        printf("================================================================================\n");
+    }
+    
+    printf("\n");
+    system("pause");
+    system("cls");
 }

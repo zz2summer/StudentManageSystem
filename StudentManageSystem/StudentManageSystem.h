@@ -1,46 +1,57 @@
 #pragma once
 
 #include<stdio.h>
-#include<conio.h>		//_getch()
-#include<stdlib.h>		//system()
-#include<string.h>		//strlen()
+#include<conio.h>		
+#include<stdlib.h>		
+#include<string.h>		
 
-//¶¨ÒåÒ»¸öÑ§Éú
+#define SUBJECT_COUNT 3
+
+// å­¦ç”Ÿç»“æ„ä½“
 typedef struct tagStudent {
-	char szName[20];	//ĞÕÃû
-	char szSex[4];		//ĞÔ±ğ
-	int  nAge;			//ÄêÁä
-	int  nStuNo;		//Ñ§ºÅ
-	int  nScore;		//³É¼¨
+	char szName[20];	
+	char szSex[4];		
+	int  nAge;			
+	int  nStuNo;		
+	int  nScores[SUBJECT_COUNT];	
+	char szClassName[30];			
 }Student;
 
-//Á´±í
-//½Úµã
+// ç­çº§ä¿¡æ¯ç»“æ„ä½“
+typedef struct tagClassInfo {
+	char szClassName[30];	
+	int  nStudentCount;		
+}ClassInfo;
+
+// èŠ‚ç‚¹ç»“æ„ä½“
 typedef struct tagNode
 {
-	Student stu;			//Ñ§ÉúĞÅÏ¢
-	struct tagNode* pNext;	//Ö¸ÏòÏÂÒ»¸ö½Úµã
+	Student stu;			
+	struct tagNode* pNext;	
 }Node;
 
-//´´½¨Í·½Úµã
-Node* g_pHead = NULL;		//Ö¸ÏòÍ·½Úµã
+// å…¨å±€å˜é‡
+Node* g_pHead = NULL;		
 
-
-//²Ëµ¥
+// èœå•
 void Menu();
-//1.Â¼ÈëÑ§ÉúĞÅÏ¢
+// 1.å½•å…¥å­¦ç”Ÿä¿¡æ¯
 void InputStudent();
-//2.´òÓ¡Ñ§ÉúĞÅÏ¢
+// 2.æ‰“å°å­¦ç”Ÿä¿¡æ¯
 void PrintStudent();
-//3.±£´æÑ§ÉúĞÅÏ¢
+// 3.ä¿å­˜å­¦ç”Ÿä¿¡æ¯
 void SaveStudent();
-//4.¶ÁÈ¡Ñ§ÉúĞÅÏ¢
+// 4.è¯»å–å­¦ç”Ÿä¿¡æ¯
 void ReadStudent();
-//5.Í³¼ÆËùÓĞÑ§ÉúÈËÊı
+// 5.ç»Ÿè®¡å­¦ç”Ÿäººæ•°
 void CountStudent();
-//6.²éÕÒÑ§ÉúĞÅÏ¢
+// 6.æŸ¥æ‰¾å­¦ç”Ÿä¿¡æ¯
 void FindStudent();
-//7.ĞŞ¸ÄÑ§ÉúĞÅÏ¢
+// 7.ä¿®æ”¹å­¦ç”Ÿä¿¡æ¯
 void ChangeStudent();
-//8.É¾³ıÑ§ÉúĞÅÏ¢
+// 8.åˆ é™¤å­¦ç”Ÿä¿¡æ¯
 void DeleteStudent();
+// 9.ç­çº§æˆç»©ç»Ÿè®¡åˆ†æ
+void ClassStatistics();
+// è·å–ç§‘ç›®åç§°
+const char* GetSubjectName(int index);
